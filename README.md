@@ -6,16 +6,14 @@
 
 ✨ Features
 
-✅ Instagram-style Gradient UI 🎨
+✅ Instagram-style Gradient UI
 
-✅ Smooth Hover & Click Effects 🖱️
+✅ Smooth Hover & Click Effects 
 
-✅ Winning Cells Highlighted 🎉
+✅ Mobile & Desktop Responsive
 
-✅ Mobile & Desktop Responsive 📱💻
-
-✅ One-Click Reset Button 🔄
+✅ Single Player & Two Players Mode
 
 
-This is Not Ai Generated
-                         .... Chatgpt
+This Game Is Not Ai Generated
+                            .... Chatgpt
