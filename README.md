@@ -15,3 +15,7 @@
 ✅ Mobile & Desktop Responsive 📱💻
 
 ✅ One-Click Reset Button 🔄
+
+
+This is Not Ai Generated
+                        ... Chatgpt
