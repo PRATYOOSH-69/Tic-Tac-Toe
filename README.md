@@ -7,7 +7,11 @@
 ✨ Features
 
 ✅ Instagram-style Gradient UI 🎨
+
 ✅ Smooth Hover & Click Effects 🖱️
+
 ✅ Winning Cells Highlighted 🎉
+
 ✅ Mobile & Desktop Responsive 📱💻
+
 ✅ One-Click Reset Button 🔄
