@@ -1,10 +1,7 @@
 📌 Tic-Tac-Toe Game 🎮
 
 🌐 Play Here: Tic-Tac-Toe Game
-
- (Replace this with an actual screenshot!)
-
-
+   https://pratyoosh-69.github.io/Tic-Tac-Toe/
 ---
 
 ✨ Features
