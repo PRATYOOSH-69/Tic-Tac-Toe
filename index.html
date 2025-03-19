@@ -4,171 +4,178 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic-Tac-Toe</title>
+    
+    <!-- Google Fonts (Material Design Style) -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
         }
 
+        /* Instagram-style gradient background */
         body {
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             height: 100vh;
-            background-color: #f5f5f5;
+            background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af, #515bd4);
+            background-size: 400% 400%;
+            animation: gradientAnimation 6s infinite alternate;
+            flex-direction: column;
+            color: white;
+            text-align: center;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
         }
 
         h1 {
-            margin-bottom: 20px;
-            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .message {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
 
         .board {
             display: grid;
             grid-template-columns: repeat(3, 100px);
             grid-template-rows: repeat(3, 100px);
-            gap: 10px;
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            gap: 5px;
+            margin-bottom: 20px;
         }
 
         .cell {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            font-weight: bold;
             width: 100px;
             height: 100px;
-            background: #fff;
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 8px;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #dd2a7b;
             cursor: pointer;
-            transition: background 0.3s, transform 0.1s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: background 0.2s, transform 0.1s;
         }
 
         .cell:hover {
-            background: #f0f0f0;
+            background: rgba(255, 255, 255, 1);
+            transform: scale(1.05);
         }
 
-        .cell:active {
-            transform: scale(0.95);
+        .winner {
+            background: rgba(255, 255, 255, 0.8);
+            color: #8134af;
+            animation: pulse 0.5s infinite alternate;
         }
 
-        .winning-cell {
-            background-color: #ffeb3b !important; /* Yellow highlight */
-            animation: glow 0.5s infinite alternate;
-        }
-
-        @keyframes glow {
-            from { box-shadow: 0 0 10px #ffeb3b; }
-            to { box-shadow: 0 0 20px #ffeb3b; }
-        }
-
-        #winner {
-            margin-top: 20px;
-            font-size: 20px;
-            font-weight: bold;
-            color: #333;
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
         }
 
         button {
-            margin-top: 20px;
-            padding: 12px 24px;
+            background: white;
+            color: #dd2a7b;
+            border: none;
+            padding: 10px 20px;
             font-size: 16px;
             font-weight: bold;
-            border: none;
-            background-color: #007BFF;
-            color: white;
+            border-radius: 5px;
             cursor: pointer;
-            border-radius: 25px; /* Rounded corners */
-            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
-            box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.3);
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         button:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-            box-shadow: 0px 6px 15px rgba(0, 123, 255, 0.5);
-        }
-
-        button:active {
-            transform: scale(0.95);
-            box-shadow: 0px 3px 7px rgba(0, 123, 255, 0.2);
+            background: #dd2a7b;
+            color: white;
         }
     </style>
 </head>
 <body>
     <h1>Tic-Tac-Toe</h1>
+    <div class="message" id="message">Player X's turn</div>
     <div class="board" id="board"></div>
-    <p id="winner"></p>
-    <button onclick="resetGame()">Reset</button>
+    <button onclick="resetGame()">Reset Game</button>
 
     <script>
-        let board = ["", "", "", "", "", "", "", "", ""];
+        const board = document.getElementById("board");
+        const message = document.getElementById("message");
+        let cells = [];
         let currentPlayer = "X";
         let gameActive = true;
 
         function createBoard() {
-            const boardElement = document.getElementById("board");
-            boardElement.innerHTML = "";
-            board.forEach((cell, index) => {
-                const cellElement = document.createElement("div");
-                cellElement.classList.add("cell");
-                cellElement.innerText = cell;
-                cellElement.addEventListener("click", () => handleClick(index));
-                boardElement.appendChild(cellElement);
-            });
+            board.innerHTML = "";
+            cells = [];
+            message.textContent = "Player X's turn";
+            gameActive = true;
+
+            for (let i = 0; i < 9; i++) {
+                let cell = document.createElement("div");
+                cell.classList.add("cell");
+                cell.dataset.index = i;
+                cell.addEventListener("click", handleClick);
+                board.appendChild(cell);
+                cells.push(cell);
+            }
         }
 
-        function handleClick(index) {
-            if (!gameActive || board[index] !== "") return;
-            
-            board[index] = currentPlayer;
-            createBoard();
-            checkWinner();
-            currentPlayer = currentPlayer === "X" ? "O" : "X";
+        function handleClick(event) {
+            if (!gameActive) return;
+            let cell = event.target;
+            if (cell.textContent === "") {
+                cell.textContent = currentPlayer;
+                let winner = checkWinner();
+                if (winner) {
+                    gameActive = false;
+                    highlightWinner(winner);
+                    message.textContent = `🎉 Player ${currentPlayer} Wins! 🎉`;
+                } else if (cells.every(cell => cell.textContent !== "")) {
+                    gameActive = false;
+                    message.textContent = "😲 It's a Draw!";
+                } else {
+                    currentPlayer = currentPlayer === "X" ? "O" : "X";
+                    message.textContent = `Player ${currentPlayer}'s turn`;
+                }
+            }
         }
 
         function checkWinner() {
-            const winningCombinations = [
-                [0, 1, 2], [3, 4, 5], [6, 7, 8], 
-                [0, 3, 6], [1, 4, 7], [2, 5, 8], 
-                [0, 4, 8], [2, 4, 6]
+            const winPatterns = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+                [0, 4, 8], [2, 4, 6]             // Diagonals
             ];
 
-            for (let combo of winningCombinations) {
-                let [a, b, c] = combo;
-                if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-                    document.getElementById("winner").innerText = `${board[a]} Wins!`;
-
-                    // Add glow effect
-                    document.getElementsByClassName("cell")[a].classList.add("winning-cell");
-                    document.getElementsByClassName("cell")[b].classList.add("winning-cell");
-                    document.getElementsByClassName("cell")[c].classList.add("winning-cell");
-
-                    gameActive = false;
-                    return;
+            for (let pattern of winPatterns) {
+                let [a, b, c] = pattern;
+                if (cells[a].textContent && cells[a].textContent === cells[b].textContent && cells[a].textContent === cells[c].textContent) {
+                    return pattern;
                 }
             }
+            return null;
+        }
 
-            if (!board.includes("")) {
-                document.getElementById("winner").innerText = "It's a Tie!";
-                gameActive = false;
-            }
+        function highlightWinner(winnerCells) {
+            winnerCells.forEach(index => {
+                cells[index].classList.add("winner");
+            });
         }
 
         function resetGame() {
-            board = ["", "", "", "", "", "", "", "", ""];
             currentPlayer = "X";
-            gameActive = true;
-            document.getElementById("winner").innerText = "";
-
             createBoard();
         }
 
