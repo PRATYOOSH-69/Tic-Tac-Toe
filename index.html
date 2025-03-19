@@ -5,16 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic-Tac-Toe</title>
     <style>
-        body {
-            text-align: center;
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
         }
-        
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
         h1 {
-            margin-top: 20px;
+            margin-bottom: 20px;
             color: #333;
         }
 
@@ -23,40 +31,50 @@
             grid-template-columns: repeat(3, 100px);
             grid-template-rows: repeat(3, 100px);
             gap: 10px;
-            justify-content: center;
-            margin: 20px auto;
-            padding: 15px;
             background: white;
+            padding: 15px;
             border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            width: max-content;
         }
 
         .cell {
-            width: 100px;
-            height: 100px;
-            background-color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 32px;
             font-weight: bold;
-            cursor: pointer;
+            width: 100px;
+            height: 100px;
+            background: #fff;
             border-radius: 8px;
-            transition: background-color 0.3s, transform 0.1s;
-            border: 2px solid #ddd;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background 0.3s, transform 0.1s;
         }
 
         .cell:hover {
-            background-color: #e0e0e0;
-            transform: scale(1.05);
+            background: #f0f0f0;
+        }
+
+        .cell:active {
+            transform: scale(0.95);
+        }
+
+        .winning-cell {
+            background-color: #ffeb3b !important; /* Yellow highlight */
+            animation: glow 0.5s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 10px #ffeb3b; }
+            to { box-shadow: 0 0 20px #ffeb3b; }
         }
 
         #winner {
+            margin-top: 20px;
             font-size: 20px;
             font-weight: bold;
-            color: #444;
-            margin-top: 10px;
+            color: #333;
         }
 
         button {
@@ -68,34 +86,27 @@
             background-color: #007BFF;
             color: white;
             cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s, transform 0.2s;
+            border-radius: 25px; /* Rounded corners */
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+            box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.3);
         }
 
         button:hover {
             background-color: #0056b3;
             transform: scale(1.05);
+            box-shadow: 0px 6px 15px rgba(0, 123, 255, 0.5);
         }
 
         button:active {
             transform: scale(0.95);
+            box-shadow: 0px 3px 7px rgba(0, 123, 255, 0.2);
         }
     </style>
 </head>
 <body>
     <h1>Tic-Tac-Toe</h1>
-    <div class="board">
-        <div class="cell" onclick="makeMove(0)"></div>
-        <div class="cell" onclick="makeMove(1)"></div>
-        <div class="cell" onclick="makeMove(2)"></div>
-        <div class="cell" onclick="makeMove(3)"></div>
-        <div class="cell" onclick="makeMove(4)"></div>
-        <div class="cell" onclick="makeMove(5)"></div>
-        <div class="cell" onclick="makeMove(6)"></div>
-        <div class="cell" onclick="makeMove(7)"></div>
-        <div class="cell" onclick="makeMove(8)"></div>
-    </div>
-    <h2 id="winner"></h2>
+    <div class="board" id="board"></div>
+    <p id="winner"></p>
     <button onclick="resetGame()">Reset</button>
 
     <script>
@@ -103,13 +114,25 @@
         let currentPlayer = "X";
         let gameActive = true;
 
-        function makeMove(index) {
-            if (board[index] === "" && gameActive) {
-                board[index] = currentPlayer;
-                document.getElementsByClassName("cell")[index].innerText = currentPlayer;
-                checkWinner();
-                currentPlayer = currentPlayer === "X" ? "O" : "X";
-            }
+        function createBoard() {
+            const boardElement = document.getElementById("board");
+            boardElement.innerHTML = "";
+            board.forEach((cell, index) => {
+                const cellElement = document.createElement("div");
+                cellElement.classList.add("cell");
+                cellElement.innerText = cell;
+                cellElement.addEventListener("click", () => handleClick(index));
+                boardElement.appendChild(cellElement);
+            });
+        }
+
+        function handleClick(index) {
+            if (!gameActive || board[index] !== "") return;
+            
+            board[index] = currentPlayer;
+            createBoard();
+            checkWinner();
+            currentPlayer = currentPlayer === "X" ? "O" : "X";
         }
 
         function checkWinner() {
@@ -123,6 +146,12 @@
                 let [a, b, c] = combo;
                 if (board[a] && board[a] === board[b] && board[a] === board[c]) {
                     document.getElementById("winner").innerText = `${board[a]} Wins!`;
+
+                    // Add glow effect
+                    document.getElementsByClassName("cell")[a].classList.add("winning-cell");
+                    document.getElementsByClassName("cell")[b].classList.add("winning-cell");
+                    document.getElementsByClassName("cell")[c].classList.add("winning-cell");
+
                     gameActive = false;
                     return;
                 }
@@ -139,11 +168,11 @@
             currentPlayer = "X";
             gameActive = true;
             document.getElementById("winner").innerText = "";
-            let cells = document.getElementsByClassName("cell");
-            for (let cell of cells) {
-                cell.innerText = "";
-            }
+
+            createBoard();
         }
+
+        createBoard();
     </script>
 </body>
 </html>
