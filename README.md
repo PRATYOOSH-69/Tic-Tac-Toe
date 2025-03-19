@@ -18,5 +18,4 @@
 
 
 This is Not Ai Generated
-
-                        ... Chatgpt
+                         .... Chatgpt
