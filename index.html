@@ -4,182 +4,314 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic-Tac-Toe</title>
-    
-    <!-- Google Fonts (Material Design Style) -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Roboto', sans-serif;
+        /* Moving Gradient Background */
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        /* Instagram-style gradient background */
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af, #515bd4);
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(45deg, #833ab4, #fd1d1d, #fcb045);
             background-size: 400% 400%;
-            animation: gradientAnimation 6s infinite alternate;
+            animation: gradientMove 10s ease infinite;
+            height: 100vh;
+            display: flex;
             flex-direction: column;
+            align-items: center;
+            justify-content: center;
             color: white;
+            margin: 0;
+        }
+
+        /* Start Screen Styling */
+        #start-screen {
             text-align: center;
         }
 
-        @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
-        }
-
-        h1 {
-            margin-bottom: 10px;
-        }
-
-        .message {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .board {
-            display: grid;
-            grid-template-columns: repeat(3, 100px);
-            grid-template-rows: repeat(3, 100px);
-            gap: 5px;
+        #start-screen h1 {
+            font-size: 5rem;
             margin-bottom: 20px;
         }
 
+        #start-screen button {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            margin: 10px;
+            border: none;
+            border-radius: 25px;
+            background: white;
+            color: #d81b60;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #start-screen button:hover {
+            background: #ff4081;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* Mode Selection Screen (Hidden Initially) */
+        #mode-screen {
+            display: none;
+            text-align: center;
+        }
+
+        #mode-screen h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        /* Mode Selection Buttons */
+        #mode-screen button {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            margin: 10px;
+            border: none;
+            border-radius: 25px;
+            background: white;
+            color: #d81b60;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #mode-screen button:hover {
+            background: #ff4081;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* Game Container (Hidden Initially) */
+        .game-container {
+            display: none;
+        }
+
+        /* Game Board Styling */
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 80px);
+            grid-template-rows: repeat(3, 80px);
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 40px;
+            border-radius: 50px;
+        }
+
+        /* Game Cells */
         .cell {
-            width: 100px;
-            height: 100px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 8px;
+            width: 80px;
+            height: 80px;
+            background: white;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             font-size: 2rem;
             font-weight: bold;
-            color: #dd2a7b;
+            color: #d81b60;
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            transition: background 0.2s, transform 0.1s;
+            border-radius: 10px;
+            transition: 0.2s;
         }
 
         .cell:hover {
-            background: rgba(255, 255, 255, 1);
-            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.7);
         }
 
-        .winner {
-            background: rgba(255, 255, 255, 0.8);
-            color: #8134af;
-            animation: pulse 0.5s infinite alternate;
+        /* Message Styling */
+        #message {
+            font-size: 1.5rem;
+            margin: 15px 0;
         }
 
-        @keyframes pulse {
-            from { transform: scale(1); }
-            to { transform: scale(1.1); }
-        }
-
-        button {
+        /* Circular Reset Button */
+        #reset {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
             background: white;
-            color: #dd2a7b;
-            border: none;
-            padding: 10px 20px;
+            color: #d81b60;
             font-size: 16px;
             font-weight: bold;
-            border-radius: 5px;
+            border: none;
             cursor: pointer;
-            transition: background 0.3s ease, color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s ease-in-out;
         }
 
-        button:hover {
-            background: #dd2a7b;
+        #reset:hover {
+            background: #ff4081;
             color: white;
+            transform: scale(1.1);
         }
     </style>
 </head>
 <body>
-    <h1>Tic-Tac-Toe</h1>
-    <div class="message" id="message">Player X's turn</div>
-    <div class="board" id="board"></div>
-    <button onclick="resetGame()">Reset Game</button>
+    <!-- Start Screen -->
+    <div id="start-screen">
+        <h1>Tic-Tac-Toe</h1>
+        <button id="start-game">Start Game</button>
+    </div>
+
+    <!-- Mode Selection Screen -->
+    <div id="mode-screen">
+        <h2>Choose Mode</h2>
+        <button id="single-player">Single Player</button>
+        <button id="two-players">Two Players</button>
+    </div>
+
+    <!-- Game Container -->
+    <div class="game-container">
+        <h1>Tic-Tac-Toe</h1>
+        <div class="board">
+            <div class="cell" data-index="0"></div>
+            <div class="cell" data-index="1"></div>
+            <div class="cell" data-index="2"></div>
+            <div class="cell" data-index="3"></div>
+            <div class="cell" data-index="4"></div>
+            <div class="cell" data-index="5"></div>
+            <div class="cell" data-index="6"></div>
+            <div class="cell" data-index="7"></div>
+            <div class="cell" data-index="8"></div>
+        </div>
+        <p id="message">Player X's Turn</p>
+        <button id="reset">Reset</button>
+    </div>
+
+    <!-- Sound Effects -->
+    <audio id="click-sound" src="https://assets.mixkit.co/active_storage/sfx/2315/2315-preview.mp3"></audio>
+    <audio id="win-sound" src="https://assets.mixkit.co/active_storage/sfx/2763/2763-preview.mp3"></audio>
+    <audio id="draw-sound" src="https://assets.mixkit.co/active_storage/sfx/2418/2418-preview.mp3"></audio>
 
     <script>
-        const board = document.getElementById("board");
+        const startScreen = document.getElementById("start-screen");
+        const modeScreen = document.getElementById("mode-screen");
+        const gameContainer = document.querySelector(".game-container");
+        const startGameButton = document.getElementById("start-game");
+        const singlePlayerButton = document.getElementById("single-player");
+        const twoPlayersButton = document.getElementById("two-players");
+        const cells = document.querySelectorAll(".cell");
         const message = document.getElementById("message");
-        let cells = [];
+        const resetButton = document.getElementById("reset");
+
+        const clickSound = document.getElementById("click-sound");
+        const winSound = document.getElementById("win-sound");
+        const drawSound = document.getElementById("draw-sound");
+
+        let board = ["", "", "", "", "", "", "", "", ""];
         let currentPlayer = "X";
         let gameActive = true;
+        let isSinglePlayer = false;
 
-        function createBoard() {
-            board.innerHTML = "";
-            cells = [];
-            message.textContent = "Player X's turn";
-            gameActive = true;
+        // Winning Patterns
+        const winPatterns = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], 
+            [0, 3, 6], [1, 4, 7], [2, 5, 8], 
+            [0, 4, 8], [2, 4, 6]
+        ];
 
-            for (let i = 0; i < 9; i++) {
-                let cell = document.createElement("div");
-                cell.classList.add("cell");
-                cell.dataset.index = i;
-                cell.addEventListener("click", handleClick);
-                board.appendChild(cell);
-                cells.push(cell);
-            }
+        // Start Game Button
+        startGameButton.addEventListener("click", () => {
+            startScreen.style.display = "none";
+            modeScreen.style.display = "block";
+        });
+
+        // Single Player Mode
+        singlePlayerButton.addEventListener("click", () => {
+            isSinglePlayer = true;
+            startGame();
+        });
+
+        // Two Players Mode
+        twoPlayersButton.addEventListener("click", () => {
+            isSinglePlayer = false;
+            startGame();
+        });
+
+        // Start the Game
+        function startGame() {
+            modeScreen.style.display = "none";
+            gameContainer.style.display = "block";
+            resetGame();
         }
 
+        // Handle Cell Click
         function handleClick(event) {
-            if (!gameActive) return;
-            let cell = event.target;
-            if (cell.textContent === "") {
-                cell.textContent = currentPlayer;
-                let winner = checkWinner();
-                if (winner) {
+            const index = event.target.getAttribute("data-index");
+
+            if (board[index] === "" && gameActive) {
+                board[index] = currentPlayer;
+                event.target.textContent = currentPlayer;
+                clickSound.play();
+
+                if (checkWin()) {
+                    message.textContent = `🎉 Player ${currentPlayer} Wins!`;
+                    winSound.play();
                     gameActive = false;
-                    highlightWinner(winner);
-                    message.textContent = `🎉 Player ${currentPlayer} Wins! 🎉`;
-                } else if (cells.every(cell => cell.textContent !== "")) {
-                    gameActive = false;
+                    return;
+                }
+
+                if (!board.includes("")) {
                     message.textContent = "😲 It's a Draw!";
-                } else {
-                    currentPlayer = currentPlayer === "X" ? "O" : "X";
-                    message.textContent = `Player ${currentPlayer}'s turn`;
+                    drawSound.play();
+                    gameActive = false;
+                    return;
+                }
+
+                currentPlayer = currentPlayer === "X" ? "O" : "X";
+                message.textContent = `Player ${currentPlayer}'s Turn`;
+
+                // AI Move (Single Player Mode)
+                if (isSinglePlayer && currentPlayer === "O" && gameActive) {
+                    setTimeout(() => {
+                        const emptyCells = board.map((val, idx) => val === "" ? idx : null).filter(val => val !== null);
+                        const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+                        board[randomCell] = "O";
+                        cells[randomCell].textContent = "O";
+                        clickSound.play();
+
+                        if (checkWin()) {
+                            message.textContent = `🎉 Player O Wins!`;
+                            winSound.play();
+                            gameActive = false;
+                        } else if (!board.includes("")) {
+                            message.textContent = "😲 It's a Draw!";
+                            drawSound.play();
+                            gameActive = false;
+                        } else {
+                            currentPlayer = "X";
+                            message.textContent = `Player X's Turn`;
+                        }
+                    }, 500);
                 }
             }
         }
 
-        function checkWinner() {
-            const winPatterns = [
-                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-                [0, 4, 8], [2, 4, 6]             // Diagonals
-            ];
-
-            for (let pattern of winPatterns) {
-                let [a, b, c] = pattern;
-                if (cells[a].textContent && cells[a].textContent === cells[b].textContent && cells[a].textContent === cells[c].textContent) {
-                    return pattern;
-                }
-            }
-            return null;
-        }
-
-        function highlightWinner(winnerCells) {
-            winnerCells.forEach(index => {
-                cells[index].classList.add("winner");
+        // Check for Winner
+        function checkWin() {
+            return winPatterns.some(pattern => {
+                const [a, b, c] = pattern;
+                return board[a] && board[a] === board[b] && board[a] === board[c];
             });
         }
 
+        // Reset Game
         function resetGame() {
+            board.fill("");
+            cells.forEach(cell => (cell.textContent = ""));
+            gameActive = true;
             currentPlayer = "X";
-            createBoard();
+            message.textContent = "Player X's Turn";
         }
 
-        createBoard();
+        // Event Listeners
+        cells.forEach(cell => cell.addEventListener("click", handleClick));
+        resetButton.addEventListener("click", resetGame);
     </script>
 </body>
 </html>
