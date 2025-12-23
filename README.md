@@ -1,19 +1,13 @@
-📌 Tic-Tac-Toe Game 🎮
+# 📌 Tic-Tac-Toe Game 🎮
 
-🌐 Play Here: Tic-Tac-Toe Game
-   https://pratyoosh-69.github.io/Tic-Tac-Toe/
----
+🌐 Play here: [Tic-Tac-Toe Game](https://pratyoosh-69.github.io/Tic-Tac-Toe)
 
-✨ Features
+# ✨ Features
 
-✅ Instagram-style Gradient UI
+* ✅ Instagram-style Gradient UI
+* ✅ Smooth hover & Click effects
+* ✅ Mobile & Desktop responsive
+* ✅ Single-player & Two players mode
 
-✅ Smooth Hover & Click Effects 
-
-✅ Mobile & Desktop Responsive
-
-✅ Single Player & Two Players Mode
-
-
-This Game Is Not Ai Generated
-                            .... Chatgpt
+This game isn't Vibe-coded
+                            - ChatGPT
