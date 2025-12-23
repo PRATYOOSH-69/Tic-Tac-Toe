@@ -9,5 +9,5 @@
 * ✅ Mobile & Desktop responsive
 * ✅ Single-player & Two players mode
 
-This game isn't Vibe-coded
+This game isn't vibe-coded
                             - ChatGPT
