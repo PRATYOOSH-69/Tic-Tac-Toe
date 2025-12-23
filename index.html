@@ -174,15 +174,15 @@
     <!-- Start Screen -->
     <div id="start-screen">
         <h1>Tic-Tac-Toe</h1>
-        <div id="credits">By Pratyoosh</div> <!-- Credits below the title -->
+        <div id="credits">by Pratyoosh</div> <!-- Credits below the title -->
         <button id="start-game">Start Game</button>
     </div>
 
     <!-- Mode Selection Screen -->
     <div id="mode-screen">
         <h2>Choose Mode</h2>
-        <button id="single-player">Single Player</button>
-        <button id="two-players">Two Players</button>
+        <button id="single-player">Single-player</button>
+        <button id="two-players">Two players</button>
     </div>
 
     <!-- Game Container -->
@@ -199,7 +199,7 @@
             <div class="cell" data-index="7"></div>
             <div class="cell" data-index="8"></div>
         </div>
-        <p id="message">Player X's Turn</p>
+        <p id="message">Player X's turn</p>
         <button id="reset">Reset</button>
     </div>
 
@@ -270,14 +270,14 @@
                 clickSound.play();
 
                 if (checkWin()) {
-                    message.textContent = `🎉 Player ${currentPlayer} Wins!`;
+                    message.textContent = `🎉 Player ${currentPlayer} won!`;
                     winSound.play();
                     gameActive = false;
                     return;
                 }
 
                 if (!board.includes("")) {
-                    message.textContent = "😲 It's a Draw!";
+                    message.textContent = "😲 It's a draw!";
                     drawSound.play();
                     gameActive = false;
                     return;
@@ -296,16 +296,16 @@
                         clickSound.play();
 
                         if (checkWin()) {
-                            message.textContent = `🎉 Player O Wins!`;
+                            message.textContent = `🎉 Player O won!`;
                             winSound.play();
                             gameActive = false;
                         } else if (!board.includes("")) {
-                            message.textContent = "😲 It's a Draw!";
+                            message.textContent = "😲 It's a draw!";
                             drawSound.play();
                             gameActive = false;
                         } else {
                             currentPlayer = "X";
-                            message.textContent = `Player X's Turn`;
+                            message.textContent = `Player X's turn`;
                         }
                     }, 500);
                 }
@@ -326,7 +326,7 @@
             cells.forEach(cell => (cell.textContent = ""));
             gameActive = true;
             currentPlayer = "X";
-            message.textContent = "Player X's Turn";
+            message.textContent = "Player X's turn";
         }
 
         // Event Listeners
