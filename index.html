@@ -260,11 +260,12 @@
             resetGame();
         }
 
+        let playerCanPlay = true;
         // Handle Cell Click
         function handleClick(event) {
             const index = event.target.getAttribute("data-index");
 
-            if (board[index] === "" && gameActive) {
+            if (board[index] === "" && gameActive && playerCanPlay) {
                 board[index] = currentPlayer;
                 event.target.textContent = currentPlayer;
                 clickSound.play();
@@ -284,10 +285,11 @@
                 }
 
                 currentPlayer = currentPlayer === "X" ? "O" : "X";
-                message.textContent = `Player ${currentPlayer}'s turn`;
+                message.textContent = `Player ${currentPlayer}'s Turn`;
 
                 // AI Move (Single Player Mode)
                 if (isSinglePlayer && currentPlayer === "O" && gameActive) {
+                    playerCanPlay = false;
                     setTimeout(() => {
                         const emptyCells = board.map((val, idx) => val === "" ? idx : null).filter(val => val !== null);
                         const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
@@ -307,6 +309,7 @@
                             currentPlayer = "X";
                             message.textContent = `Player X's turn`;
                         }
+                        playerCanPlay = true; // Re-enable when it's the player's turn
                     }, 500);
                 }
             }
