@@ -1,6 +1,6 @@
 # 📌 Tic-Tac-Toe Game 🎮
 
-🌐 Play here: [Tic-Tac-Toe Game](https://pratyoosh-69.github.io/Tic-Tac-Toe)
+🌐 Play here: [Tic-Tac-Toe Game](https://impratyoosh.github.io/Tic-Tac-Toe/)
 
 # ✨ Features
 
