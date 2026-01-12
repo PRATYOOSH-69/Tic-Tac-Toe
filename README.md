@@ -1,11 +1,56 @@
-# 📌 Tic-Tac-Toe Game 🎮
-
-🌐 Play here: [Tic-Tac-Toe Game](https://impratyoosh.github.io/Tic-Tac-Toe/)
-
-'Features'
-Material design 
-Smart Ai 
-Two players support 
+🌐 Play here: [Tic-Tac-Toe Game](https://impratyoosh.github.io/Tic-Tac-Toe/) 
 
 This game isn't vibe-coded
                             - ChatGPT
+# Tic Tac Toe
+
+A clean, modern **Tic-Tac-Toe web game** built with **vanilla HTML, CSS, and JavaScript**, focused on good structure, maintainability, and user experience.
+
+This project is intentionally framework-free to strengthen core web development fundamentals.
+
+---
+
+## ✨ Features
+
+- 🎨 **Material-inspired design**
+  - Clean surfaces
+  - Rounded components
+  - Calm, expressive UI
+
+- 🧠 **Smart AI**
+  - Tries to win when possible
+  - Blocks opponent moves
+  - Prioritizes center and corners
+
+- 👥 **Two-player mode**
+  - Play locally with another person
+  - Clear turn handling
+
+- 🧩 **Well-structured code**
+  - Separated HTML, CSS, and JavaScript
+  - Easy to read and extend
+
+---
+
+## 🛠 Tech Stack
+
+- **HTML5** – Structure
+- **CSS3** – Styling (Material-inspired)
+- **Vanilla JavaScript** – Game logic & AI  
+- **GitHub Pages** – Hosting
+
+_No frameworks, no libraries._
+
+---
+
+## 📂 Project Structure
+
+```text
+.
+├── index.html
+├── css/
+│   └── style.css
+├── js/
+│   └── script.js
+├── README.md
+└── LICENSE
