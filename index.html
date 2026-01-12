@@ -1,340 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic-Tac-Toe</title>
-    <style>
-        /* Moving Gradient Background */
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tic Tac Toe – Expressive</title>
 
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background: linear-gradient(45deg, #833ab4, #fd1d1d, #fcb045);
-            background-size: 400% 400%;
-            animation: gradientMove 10s ease infinite;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            margin: 0;
-        }
+<style>
+:root {
+  --primary: #6750a4;
+  --on-primary: #ffffff;
+  --surface: #fef7ff;
+  --surface-variant: #e7e0ec;
+  --outline: #cac4d0;
+  --text-primary: #1c1b1f;
+}
 
-        /* Start Screen Styling */
-        #start-screen {
-            text-align: center;
-        }
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: linear-gradient(180deg, #ede7f6, #fef7ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+}
 
-        #start-screen h1 {
-            font-size: 5rem;
-            margin-bottom: 10px; /* Adjusted margin for spacing */
-        }
+.hidden { display: none; }
 
-        /* Credits Styling */
-        #credits {
-            background: rgba(255, 255, 255, 0.8);
-            color: #d81b60;
-            font-size: 1rem;
-            font-weight: bold;
-            padding: 10px 20px;
-            border-radius: 25px; /* Capsule shape */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            margin-bottom: 20px; /* Spacing below the credits */
-            transition: 0.3s ease-in-out;
-        }
+.container {
+  text-align: center;
+  padding: 24px;
+}
 
-        #credits:hover {
-            background: rgba(255, 255, 255, 1);
-            transform: scale(1.05);
-        }
+h1, h2 {
+  margin: 0 0 12px;
+  font-weight: 600;
+}
 
-        #start-screen button {
-            padding: 10px 20px;
-            font-size: 1.2rem;
-            margin: 10px;
-            border: none;
-            border-radius: 25px;
-            background: white;
-            color: #d81b60;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+button {
+  padding: 12px 24px;
+  border-radius: 999px;
+  border: none;
+  background: var(--primary);
+  color: var(--on-primary);
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: transform .2s, box-shadow .2s;
+}
 
-        #start-screen button:hover {
-            background: #ff4081;
-            color: white;
-            transform: scale(1.1);
-        }
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+}
 
-        /* Mode Selection Screen (Hidden Initially) */
-        #mode-screen {
-            display: none;
-            text-align: center;
-        }
+.board-card {
+  background: var(--surface);
+  border-radius: 24px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
 
-        #mode-screen h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, clamp(72px, 22vw, 96px));
+  gap: 12px;
+}
 
-        /* Mode Selection Buttons */
-        #mode-screen button {
-            padding: 10px 20px;
-            font-size: 1.2rem;
-            margin: 10px;
-            border: none;
-            border-radius: 25px;
-            background: white;
-            color: #d81b60;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+.cell {
+  aspect-ratio: 1;
+  background: var(--surface-variant);
+  border-radius: 16px;
+  font-size: 2.2rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  transition: background .2s;
+}
 
-        #mode-screen button:hover {
-            background: #ff4081;
-            color: white;
-            transform: scale(1.1);
-        }
+.cell:hover {
+  background: #d7cfe3;
+}
 
-        /* Game Container (Hidden Initially) */
-        .game-container {
-            display: none;
-        }
-
-        /* Game Board Styling */
-        .board {
-            display: grid;
-            grid-template-columns: repeat(3, 80px);
-            grid-template-rows: repeat(3, 80px);
-            gap: 4px;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 40px;
-            border-radius: 50px;
-        }
-
-        /* Game Cells */
-        .cell {
-            width: 80px;
-            height: 80px;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            font-weight: bold;
-            color: #d81b60;
-            cursor: pointer;
-            border-radius: 10px;
-            transition: 0.2s;
-        }
-
-        .cell:hover {
-            background: rgba(255, 255, 255, 0.7);
-        }
-
-        /* Message Styling */
-        #message {
-            font-size: 1.5rem;
-            margin: 15px 0;
-        }
-
-        /* Circular Reset Button */
-        #reset {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: white;
-            color: #d81b60;
-            font-size: 16px;
-            font-weight: bold;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.3s ease-in-out;
-        }
-
-        #reset:hover {
-            background: #ff4081;
-            color: white;
-            transform: scale(1.1);
-        }
-    </style>
+.info {
+  margin: 16px 0;
+  font-size: 1.1rem;
+}
+</style>
 </head>
+
 <body>
-    <!-- Start Screen -->
-    <div id="start-screen">
-        <h1>Tic-Tac-Toe</h1>
-        <div id="credits">by Pratyoosh</div> <!-- Credits below the title -->
-        <button id="start-game">Start Game</button>
-    </div>
 
-    <!-- Mode Selection Screen -->
-    <div id="mode-screen">
-        <h2>Choose Mode</h2>
-        <button id="single-player">Single-player</button>
-        <button id="two-players">Two players</button>
-    </div>
+<div class="container" id="startScreen">
+  <h1>Tic-Tac-Toe</h1>
+  <p>Expressive Edition</p>
+  <button onclick="goToMode()">Start</button>
+</div>
 
-    <!-- Game Container -->
-    <div class="game-container">
-        <h1>Tic-Tac-Toe</h1>
-        <div class="board">
-            <div class="cell" data-index="0"></div>
-            <div class="cell" data-index="1"></div>
-            <div class="cell" data-index="2"></div>
-            <div class="cell" data-index="3"></div>
-            <div class="cell" data-index="4"></div>
-            <div class="cell" data-index="5"></div>
-            <div class="cell" data-index="6"></div>
-            <div class="cell" data-index="7"></div>
-            <div class="cell" data-index="8"></div>
-        </div>
-        <p id="message">Player X's turn</p>
-        <button id="reset">Reset</button>
-    </div>
+<div class="container hidden" id="modeScreen">
+  <h2>Choose Mode</h2>
+  <button onclick="startGame(true)">Single Player</button>
+  <br><br>
+  <button onclick="startGame(false)">Two Players</button>
+</div>
 
-    <!-- Sound Effects -->
-    <audio id="click-sound" src="https://assets.mixkit.co/active_storage/sfx/2315/2315-preview.mp3"></audio>
-    <audio id="win-sound" src="https://assets.mixkit.co/active_storage/sfx/2763/2763-preview.mp3"></audio>
-    <audio id="draw-sound" src="https://assets.mixkit.co/active_storage/sfx/2418/2418-preview.mp3"></audio>
+<div class="container hidden" id="gameScreen">
+  <div class="board-card">
+    <div class="board" id="board"></div>
+  </div>
+  <div class="info" id="message"></div>
+  <button onclick="resetGame()">Reset</button>
+</div>
 
-    <script>
-        const startScreen = document.getElementById("start-screen");
-        const modeScreen = document.getElementById("mode-screen");
-        const gameContainer = document.querySelector(".game-container");
-        const startGameButton = document.getElementById("start-game");
-        const singlePlayerButton = document.getElementById("single-player");
-        const twoPlayersButton = document.getElementById("two-players");
-        const cells = document.querySelectorAll(".cell");
-        const message = document.getElementById("message");
-        const resetButton = document.getElementById("reset");
+<script>
+const startScreen = document.getElementById("startScreen");
+const modeScreen = document.getElementById("modeScreen");
+const gameScreen = document.getElementById("gameScreen");
+const boardEl = document.getElementById("board");
+const messageEl = document.getElementById("message");
 
-        const clickSound = document.getElementById("click-sound");
-        const winSound = document.getElementById("win-sound");
-        const drawSound = document.getElementById("draw-sound");
+let board, currentPlayer, gameActive, singlePlayer;
+let playerCanPlay = true;
 
-        let board = ["", "", "", "", "", "", "", "", ""];
-        let currentPlayer = "X";
-        let gameActive = true;
-        let isSinglePlayer = false;
+const wins = [
+  [0,1,2],[3,4,5],[6,7,8],
+  [0,3,6],[1,4,7],[2,5,8],
+  [0,4,8],[2,4,6]
+];
 
-        // Winning Patterns
-        const winPatterns = [
-            [0, 1, 2], [3, 4, 5], [6, 7, 8], 
-            [0, 3, 6], [1, 4, 7], [2, 5, 8], 
-            [0, 4, 8], [2, 4, 6]
-        ];
+function goToMode() {
+  startScreen.classList.add("hidden");
+  modeScreen.classList.remove("hidden");
+}
 
-        // Start Game Button
-        startGameButton.addEventListener("click", () => {
-            startScreen.style.display = "none";
-            modeScreen.style.display = "block";
-        });
+function startGame(single) {
+  singlePlayer = single;
+  modeScreen.classList.add("hidden");
+  gameScreen.classList.remove("hidden");
+  init();
+}
 
-        // Single Player Mode
-        singlePlayerButton.addEventListener("click", () => {
-            isSinglePlayer = true;
-            startGame();
-        });
+function init() {
+  board = Array(9).fill("");
+  currentPlayer = "X";
+  gameActive = true;
+  playerCanPlay = true;
+  boardEl.innerHTML = "";
+  board.forEach((_, i) => createCell(i));
+  updateMessage();
+}
 
-        // Two Players Mode
-        twoPlayersButton.addEventListener("click", () => {
-            isSinglePlayer = false;
-            startGame();
-        });
+function createCell(i) {
+  const c = document.createElement("div");
+  c.className = "cell";
+  c.onclick = () => handleMove(i);
+  boardEl.appendChild(c);
+}
 
-        // Start the Game
-        function startGame() {
-            modeScreen.style.display = "none";
-            gameContainer.style.display = "block";
-            resetGame();
-        }
+function handleMove(i) {
+  if (!gameActive || !playerCanPlay || board[i]) return;
 
-        let playerCanPlay = true;
-        // Handle Cell Click
-        function handleClick(event) {
-            const index = event.target.getAttribute("data-index");
+  place(i, currentPlayer);
+  if (checkEnd()) return;
 
-            if (board[index] === "" && gameActive && playerCanPlay) {
-                board[index] = currentPlayer;
-                event.target.textContent = currentPlayer;
-                clickSound.play();
+  currentPlayer = currentPlayer === "X" ? "O" : "X";
+  updateMessage();
 
-                if (checkWin()) {
-                    message.textContent = `🎉 Player ${currentPlayer} won!`;
-                    winSound.play();
-                    gameActive = false;
-                    return;
-                }
+  if (singlePlayer && currentPlayer === "O") {
+    playerCanPlay = false;
+    setTimeout(() => {
+      aiMove();
+      playerCanPlay = true;
+    }, 400);
+  }
+}
 
-                if (!board.includes("")) {
-                    message.textContent = "😲 It's a draw!";
-                    drawSound.play();
-                    gameActive = false;
-                    return;
-                }
+function aiMove() {
+  const empty = board.map((v,i)=>v?null:i).filter(v=>v!==null);
+  const move = empty[Math.floor(Math.random()*empty.length)];
+  place(move, "O");
+  if (checkEnd()) return;
+  currentPlayer = "X";
+  updateMessage();
+}
 
-                currentPlayer = currentPlayer === "X" ? "O" : "X";
-                message.textContent = `Player ${currentPlayer}'s turn`;
+function place(i, p) {
+  board[i] = p;
+  boardEl.children[i].textContent = p;
+}
 
-                // AI Move (Single Player Mode)
-                if (isSinglePlayer && currentPlayer === "O" && gameActive) {
-                    playerCanPlay = false;
-                    setTimeout(() => {
-                        const emptyCells = board.map((val, idx) => val === "" ? idx : null).filter(val => val !== null);
-                        const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-                        board[randomCell] = "O";
-                        cells[randomCell].textContent = "O";
-                        clickSound.play();
+function checkEnd() {
+  if (wins.some(w => w.every(i => board[i] === currentPlayer))) {
+    messageEl.textContent = `🎉 ${currentPlayer} wins`;
+    gameActive = false;
+    return true;
+  }
+  if (board.every(v => v)) {
+    messageEl.textContent = "Draw";
+    gameActive = false;
+    return true;
+  }
+  return false;
+}
 
-                        if (checkWin()) {
-                            message.textContent = `🎉 Player O won!`;
-                            winSound.play();
-                            gameActive = false;
-                        } else if (!board.includes("")) {
-                            message.textContent = "😲 It's a draw!";
-                            drawSound.play();
-                            gameActive = false;
-                        } else {
-                            currentPlayer = "X";
-                            message.textContent = `Player X's turn`;
-                        }
-                        playerCanPlay = true; // Re-enable when it's player's turn
-                    }, 500);
-                }
-            }
-        }
+function updateMessage() {
+  messageEl.textContent = `Player ${currentPlayer}'s turn`;
+}
 
-        // Check for Winner
-        function checkWin() {
-            return winPatterns.some(pattern => {
-                const [a, b, c] = pattern;
-                return board[a] && board[a] === board[b] && board[a] === board[c];
-            });
-        }
+function resetGame() {
+  init();
+}
+</script>
 
-        // Reset Game
-        function resetGame() {
-            board.fill("");
-            cells.forEach(cell => (cell.textContent = ""));
-            gameActive = true;
-            currentPlayer = "X";
-            message.textContent = "Player X's turn";
-        }
-
-        // Event Listeners
-        cells.forEach(cell => cell.addEventListener("click", handleClick));
-        resetButton.addEventListener("click", resetGame);
-    </script>
 </body>
 </html>
