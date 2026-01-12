@@ -6,7 +6,9 @@ This game isn't vibe-coded
                             - ChatGPT
 # Tic Tac Toe
 
-A modern Tic-Tac-Toe web game with expressive design and a smart AI opponent
+A modern Tic-Tac-Toe web game with expressive design and a smart AI opponents.
+
+
 
 
 ## ✨ Features
