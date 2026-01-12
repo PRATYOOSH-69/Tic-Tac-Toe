@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tic Tac Toe</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container" id="startScreen">
+  <h1>Tic-Tac-Toe</h1>
+  <p>Expressive Edition</p>
+  <button onclick="goToMode()">Start</button>
+</div>
+
+<div class="container hidden" id="modeScreen">
+  <h2>Choose Mode</h2>
+  <button onclick="startGame(true)">Single Player</button>
+  <button onclick="startGame(false)">Two Players</button>
+</div>
+
+<div class="container hidden" id="gameScreen">
+  <div class="board-card">
+    <div class="board" id="board"></div>
+  </div>
+  <div class="info" id="message"></div>
+  <button onclick="resetGame()">Reset</button>
+</div>
+
+<script src="script.js" defer></script>
+</body>
+</html>
