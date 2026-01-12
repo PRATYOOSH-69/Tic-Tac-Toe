@@ -6,10 +6,7 @@ This game isn't vibe-coded
                             - ChatGPT
 # Tic Tac Toe
 
-A clean, modern **Tic-Tac-Toe web game** built with **vanilla HTML, CSS, and JavaScript**, focused on good structure, maintainability, and user experience.
-
-This project is intentionally framework-free to strengthen core web development fundamentals.
-
+A modern Tic-Tac-Toe web game with expressive design and a smart AI opponent
 ---
 
 ## ✨ Features
