@@ -7,7 +7,7 @@ This game isn't vibe-coded
 # Tic Tac Toe
 
 A modern Tic-Tac-Toe web game with expressive design and a smart AI opponent
----
+
 
 ## ✨ Features
 
