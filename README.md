@@ -1,9 +1,4 @@
-🌐 Play here: [Tic-Tac-Toe Game](https://impratyoosh.github.io/Tic-Tac-Toe/)
-
-'Features'
-Material design 
-Smart Ai 
-Two players support 
+🌐 Play here: [Tic-Tac-Toe Game](https://impratyoosh.github.io/Tic-Tac-Toe/) 
 
 This game isn't vibe-coded
                             - ChatGPT
