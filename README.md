@@ -53,3 +53,17 @@ _No frameworks, no libraries._
 │   └── script.js
 ├── README.md
 └── LICENSE
+
+
+## Contributions
+
+This project is currently maintained by the author.
+
+Contributions are welcome in the form of:
+- Bug fixes
+- UI/UX improvements
+- AI enhancements
+- Performance optimizations
+- Documentation improvements
+
+Feel free to open an issue or submit a pull request.
