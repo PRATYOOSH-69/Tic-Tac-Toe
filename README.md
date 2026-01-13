@@ -42,20 +42,6 @@ _No frameworks, no libraries._
 
 ---
 
-## 📂 Project Structure
-
-```text
-.
-├── index.html
-├── css/
-│   └── style.css
-├── js/
-│   └── script.js
-├── README.md
-└── LICENSE
-
-
-___
 ## Contributions
 
 This project is currently maintained by the author.
@@ -68,3 +54,16 @@ Contributions are welcome in the form of:
 - Documentation improvements
 
 Feel free to open an issue or submit a pull request.
+
+
+## 📂 Project Structure
+
+```text
+.
+├── index.html
+├── css/
+│   └── style.css
+├── js/
+│   └── script.js
+├── README.md
+└── LICENSE
