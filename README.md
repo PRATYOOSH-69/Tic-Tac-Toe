@@ -1,5 +1,6 @@
 Play here:
-[Tic-Tac-Toe Game](https://impratyoosh.github.io/Tic-Tac-Toe/) 
+[Tic-Tac-Toe Game](https://impratyoosh.github.io/Tic-Tac-Toe/)
+
 ![GitHub](https://img.shields.io/github/license/imPratyoosh/Tic-Tac-Toe)
 
 This game isn't vibe-coded
