@@ -1,14 +1,14 @@
-🌐 Play here: [Tic-Tac-Toe Game](https://impratyoosh.github.io/Tic-Tac-Toe/) 
+Play here:
+[Tic-Tac-Toe Game](https://impratyoosh.github.io/Tic-Tac-Toe/)     
+![GitHub](https://img.shields.io/github/license/imPratyoosh/Tic-Tac-Toe)
 
 This game isn't vibe-coded
                             - ChatGPT
 # Tic Tac Toe
+A modern Tic-Tac-Toe web game with expressive design and a smart AI opponents.
 
-A clean, modern **Tic-Tac-Toe web game** built with **vanilla HTML, CSS, and JavaScript**, focused on good structure, maintainability, and user experience.
 
-This project is intentionally framework-free to strengthen core web development fundamentals.
 
----
 
 ## ✨ Features
 
@@ -42,6 +42,20 @@ This project is intentionally framework-free to strengthen core web development 
 _No frameworks, no libraries._
 
 ---
+
+## Contributions
+
+This project is currently maintained by the author.
+
+Contributions are welcome in the form of:
+- Bug fixes
+- UI/UX improvements
+- AI enhancements
+- Performance optimizations
+- Documentation improvements
+
+Feel free to open an issue or submit a pull request.
+
 
 ## 📂 Project Structure
 
