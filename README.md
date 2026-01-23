@@ -27,7 +27,7 @@ A modern Tic-Tac-Toe web game with expressive design and a smart AI opponents.
   - Clear turn handling
 
 - 🧩 **Well-structured code**
-  - Separated HTML, CSS, and JavaScript
+  - ~~Separated HTML, CSS, and JavaScript~~(I don't understand any of these languags and with chagpt the game get worse while doing this)
   - Easy to read and extend
 
 ---
