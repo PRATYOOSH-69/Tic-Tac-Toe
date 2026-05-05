@@ -1,220 +1,795 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Tic Tac Toe – Expressive</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tic Tac Toe | Material 3 Expressive</title>
+    <style>
+        /* Material 3 Expressive Design System */
+        :root {
+            --md-sys-color-primary: #6750A4;
+            --md-sys-color-on-primary: #FFFFFF;
+            --md-sys-color-primary-container: #EADDFF;
+            --md-sys-color-on-primary-container: #21005D;
+            --md-sys-color-secondary: #625B71;
+            --md-sys-color-secondary-container: #E8DEF8;
+            --md-sys-color-on-secondary-container: #1D192B;
+            --md-sys-color-tertiary: #7D5260;
+            --md-sys-color-tertiary-container: #FFD8E4;
+            --md-sys-color-on-tertiary-container: #31111D;
+            --md-sys-color-surface: #FFFBFE;
+            --md-sys-color-on-surface: #1C1B1F;
+            --md-sys-color-surface-variant: #E7E0EC;
+            --md-sys-color-on-surface-variant: #49454F;
+            --md-sys-color-outline: #79747E;
+            --md-sys-color-background: #FFFBFE;
+            --md-sys-color-on-background: #1C1B1F;
+            
+            --md-sys-elevation-1: 0px 1px 3px 1px rgba(0,0,0,0.15), 0px 1px 2px 0px rgba(0,0,0,0.30);
+            --md-sys-elevation-2: 0px 2px 6px 2px rgba(0,0,0,0.15), 0px 1px 2px 0px rgba(0,0,0,0.30);
+            --md-sys-elevation-3: 0px 4px 8px 3px rgba(0,0,0,0.15), 0px 1px 3px 0px rgba(0,0,0,0.30);
 
-<style>
-:root {
-  --primary: #6750a4;
-  --on-primary: #ffffff;
-  --surface: #fef7ff;
-  --surface-variant: #e7e0ec;
-  --outline: #cac4d0;
-  --text-primary: #1c1b1f;
-}
+            --border-radius-sm: 12px;
+            --border-radius-md: 24px;
+            --border-radius-lg: 32px;
+            --border-radius-full: 9999px;
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  background: linear-gradient(180deg, #ede7f6, #fef7ff);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-primary);
-}
+            --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --transition-spring: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-.hidden { display: none; }
+        [data-theme="dark"] {
+            --md-sys-color-primary: #D0BCFF;
+            --md-sys-color-on-primary: #381E72;
+            --md-sys-color-primary-container: #4F378B;
+            --md-sys-color-on-primary-container: #EADDFF;
+            --md-sys-color-secondary: #CCC2DC;
+            --md-sys-color-secondary-container: #4A4458;
+            --md-sys-color-on-secondary-container: #E8DEF8;
+            --md-sys-color-tertiary: #EFB8C8;
+            --md-sys-color-tertiary-container: #633B48;
+            --md-sys-color-on-tertiary-container: #FFD8E4;
+            --md-sys-color-surface: #1C1B1F;
+            --md-sys-color-on-surface: #E6E1E5;
+            --md-sys-color-surface-variant: #49454F;
+            --md-sys-color-on-surface-variant: #CAC4D0;
+            --md-sys-color-outline: #938F99;
+            --md-sys-color-background: #1C1B1F;
+            --md-sys-color-on-background: #E6E1E5;
 
-.container {
-  text-align: center;
-  padding: 24px;
-}
+            --md-sys-elevation-1: 0px 1px 3px 1px rgba(0,0,0,0.3), 0px 1px 2px 0px rgba(0,0,0,0.4);
+        }
 
-h1, h2 {
-  margin: 0 0 12px;
-  font-weight: 600;
-}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-button {
-  padding: 12px 24px;
-  border-radius: 999px;
-  border: none;
-  background: var(--primary);
-  color: var(--on-primary);
-  font-size: 1rem;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  transition: transform .2s, box-shadow .2s;
-}
+        body {
+            font-family: var(--font-family);
+            background-color: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-background);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            transition: background-color var(--transition-fast), color var(--transition-fast);
+            overflow: hidden;
+        }
 
-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.2);
-}
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            height: 100vh;
+            height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            padding: 24px;
+            position: relative;
+        }
 
-.board-card {
-  background: var(--surface);
-  border-radius: 24px;
-  padding: 20px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-}
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
 
-.board {
-  display: grid;
-  grid-template-columns: repeat(3, clamp(72px, 22vw, 96px));
-  gap: 12px;
-}
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
 
-.cell {
-  aspect-ratio: 1;
-  background: var(--surface-variant);
-  border-radius: 16px;
-  font-size: 2.2rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  user-select: none;
-  transition: background .2s;
-}
+        .icon-btn {
+            background: transparent;
+            border: none;
+            color: var(--md-sys-color-on-surface-variant);
+            width: 48px;
+            height: 48px;
+            border-radius: var(--border-radius-full);
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            transition: background-color var(--transition-fast);
+        }
 
-.cell:hover {
-  background: #d7cfe3;
-}
+        .icon-btn:hover { background-color: rgba(121, 116, 126, 0.08); }
+        .icon-btn svg { width: 24px; height: 24px; fill: currentColor; }
 
-.info {
-  margin: 16px 0;
-  font-size: 1.1rem;
-}
-</style>
+        .scoreboard {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 32px;
+            background: var(--md-sys-color-surface-variant);
+            padding: 16px;
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--md-sys-elevation-1);
+        }
+
+        .score-card {
+            flex: 1;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .score-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+
+        .score-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--md-sys-color-primary);
+        }
+
+        .controls { display: flex; gap: 12px; margin-bottom: 24px; }
+        .select-wrapper { position: relative; flex: 1; }
+
+        select {
+            width: 100%;
+            appearance: none;
+            background-color: var(--md-sys-color-secondary-container);
+            color: var(--md-sys-color-on-secondary-container);
+            border: none;
+            padding: 16px 20px;
+            border-radius: var(--border-radius-full);
+            font-size: 14px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            box-shadow: var(--md-sys-elevation-1);
+            outline: none;
+        }
+
+        .select-wrapper::after {
+            content: '▼';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 10px;
+            pointer-events: none;
+            color: var(--md-sys-color-on-secondary-container);
+        }
+
+        .turn-indicator {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .turn-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: var(--border-radius-full);
+            font-size: 14px;
+            font-weight: 700;
+            transition: all var(--transition-spring);
+        }
+
+        .board-container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            width: 100%;
+            aspect-ratio: 1;
+            max-width: 400px;
+        }
+
+        .cell {
+            background-color: var(--md-sys-color-surface);
+            border: 2px solid var(--md-sys-color-outline);
+            border-radius: var(--border-radius-md);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 64px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: var(--md-sys-elevation-1);
+            transition: all var(--transition-spring);
+            user-select: none;
+        }
+
+        .cell:hover:not(.occupied) {
+            background-color: var(--md-sys-color-surface-variant);
+            transform: scale(1.02);
+        }
+
+        .cell.occupied { cursor: default; border-color: transparent; }
+
+        .cell[data-value="X"] {
+            color: var(--md-sys-color-primary);
+            background-color: var(--md-sys-color-primary-container);
+        }
+
+        .cell[data-value="O"] {
+            color: var(--md-sys-color-tertiary);
+            background-color: var(--md-sys-color-tertiary-container);
+        }
+
+        .cell.win {
+            animation: winPulse 1s infinite alternate;
+            z-index: 2;
+            box-shadow: var(--md-sys-elevation-3);
+        }
+
+        @keyframes winPulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.08); }
+        }
+
+        .cell-content {
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all var(--transition-spring);
+        }
+
+        .cell.occupied .cell-content { opacity: 1; transform: scale(1); }
+
+        .actions { display: flex; gap: 16px; margin-top: auto; padding-top: 24px; }
+
+        .btn {
+            flex: 1;
+            padding: 16px;
+            border: none;
+            border-radius: var(--border-radius-full);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            transition: all var(--transition-fast);
+            font-family: inherit;
+        }
+
+        .btn:active { transform: scale(0.96); }
+        .btn-primary {
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            box-shadow: var(--md-sys-elevation-2);
+        }
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--md-sys-color-primary);
+            border: 2px solid var(--md-sys-color-primary);
+        }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        .overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px);
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none;
+            transition: opacity var(--transition-fast); z-index: 10;
+        }
+
+        .overlay.active { opacity: 1; pointer-events: auto; }
+
+        .modal {
+            background: var(--md-sys-color-surface);
+            padding: 32px; border-radius: var(--border-radius-lg);
+            width: 90%; max-width: 360px; text-align: center;
+            transform: translateY(20px) scale(0.95);
+            transition: all var(--transition-spring);
+            box-shadow: var(--md-sys-elevation-3);
+        }
+
+        .overlay.active .modal { transform: translateY(0) scale(1); }
+        .modal h2 { font-size: 24px; margin-bottom: 8px; color: var(--md-sys-color-on-surface); }
+        .modal p { color: var(--md-sys-color-on-surface-variant); margin-bottom: 24px; }
+
+        .settings-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 0; border-bottom: 1px solid var(--md-sys-color-surface-variant);
+        }
+
+        .switch { position: relative; display: inline-block; width: 52px; height: 32px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--md-sys-color-surface-variant); transition: .4s; border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 24px; width: 24px; left: 4px; bottom: 4px;
+            background-color: var(--md-sys-color-on-surface-variant); transition: .4s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--md-sys-color-primary); }
+        input:checked + .slider:before { transform: translateX(20px); background-color: var(--md-sys-color-on-primary); }
+
+        @media (max-width: 360px) {
+            .cell { font-size: 48px; }
+            h1 { font-size: 24px; }
+            .board { gap: 8px; }
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="container" id="startScreen">
-  <h1>Tic-Tac-Toe</h1>
-  <p>Expressive Edition</p>
-  <button onclick="goToMode()">Start</button>
+<div class="app-container">
+    <header>
+        <h1>Tic Tac Toe</h1>
+        <button class="icon-btn" id="settingsBtn" aria-label="Settings">
+            <svg viewBox="0 0 24 24"><path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/></svg>
+        </button>
+    </header>
+
+    <div class="scoreboard">
+        <div class="score-card">
+            <span class="score-label">Player X</span>
+            <span class="score-value" id="scoreX">0</span>
+        </div>
+        <div class="score-card">
+            <span class="score-label">Draws</span>
+            <span class="score-value" id="scoreDraws">0</span>
+        </div>
+        <div class="score-card">
+            <span class="score-label" id="labelO">AI (O)</span>
+            <span class="score-value" id="scoreO">0</span>
+        </div>
+    </div>
+
+    <div class="controls">
+        <div class="select-wrapper">
+            <select id="gameMode">
+                <option value="pvp">Player vs Player</option>
+                <option value="pve" selected>Player vs AI</option>
+            </select>
+        </div>
+        <div class="select-wrapper" id="difficultyWrapper">
+            <select id="difficulty">
+                <option value="easy">Easy AI</option>
+                <option value="medium" selected>Medium AI</option>
+                <option value="hard">Hard AI</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="turn-indicator">
+        Current Turn: <span class="turn-badge" id="turnBadge">X</span>
+    </div>
+
+    <div class="board-container">
+        <div class="board" id="board"></div>
+    </div>
+
+    <div class="actions">
+        <button class="btn btn-secondary" id="undoBtn" disabled>
+            <svg style="width:20px;height:20px;fill:currentColor" viewBox="0 0 24 24"><path d="M12.5,8C9.85,8 7.45,9 5.6,10.6L2,7V16H11L7.38,12.38C8.77,11.22 10.54,10.5 12.5,10.5C16.04,10.5 19.05,12.81 20.1,16L22.47,15.22C21.08,11.03 17.15,8 12.5,8Z"/></svg>
+            Undo
+        </button>
+        <button class="btn btn-primary" id="restartBtn">
+            <svg style="width:20px;height:20px;fill:currentColor" viewBox="0 0 24 24"><path d="M17.65,6.35C16.2,4.9 14.21,4 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20C15.73,20 18.84,17.45 19.73,14H17.65C16.83,16.33 14.61,18 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6C13.66,6 15.14,6.69 16.22,7.78L13,11H20V4L17.65,6.35Z"/></svg>
+            Restart
+        </button>
+    </div>
 </div>
 
-<div class="container hidden" id="modeScreen">
-  <h2>Choose Mode</h2>
-  <button onclick="startGame(true)">Single Player</button>
-  <br><br>
-  <button onclick="startGame(false)">Two Players</button>
+<div class="overlay" id="settingsOverlay">
+    <div class="modal">
+        <h2>Settings</h2>
+        <p>Customize your experience</p>
+        <div class="settings-row">
+            <span style="font-weight:600">Dark Mode</span>
+            <label class="switch">
+                <input type="checkbox" id="themeToggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="settings-row">
+            <span style="font-weight:600">Sound Effects</span>
+            <label class="switch">
+                <input type="checkbox" id="soundToggle" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div style="margin-top: 24px;">
+            <button class="btn btn-secondary" id="resetScoresBtn" style="width:100%">Reset Scores</button>
+        </div>
+        <div style="margin-top: 12px;">
+            <button class="btn btn-primary" id="closeSettingsBtn" style="width:100%">Done</button>
+        </div>
+    </div>
 </div>
 
-<div class="container hidden" id="gameScreen">
-  <div class="board-card">
-    <div class="board" id="board"></div>
-  </div>
-  <div class="info" id="message"></div>
-  <button onclick="resetGame()">Reset</button>
+<div class="overlay" id="gameOverOverlay">
+    <div class="modal">
+        <h2 id="gameOverTitle">Game Over</h2>
+        <p id="gameOverMsg">Player X wins!</p>
+        <button class="btn btn-primary" id="playAgainBtn" style="width:100%">Play Again</button>
+    </div>
 </div>
 
 <script>
-const startScreen = document.getElementById("startScreen");
-const modeScreen = document.getElementById("modeScreen");
-const gameScreen = document.getElementById("gameScreen");
-const boardEl = document.getElementById("board");
-const messageEl = document.getElementById("message");
+    /** SAFE STORAGE WRAPPERS (Prevents iframe sandbox crashes) **/
+    function safeGetItem(key) { try { return localStorage.getItem(key); } catch(e) { return null; } }
+    function safeSetItem(key, val) { try { localStorage.setItem(key, val); } catch(e) {} }
 
-let board, currentPlayer, gameActive, singlePlayer;
-let playerCanPlay = true;
+    /** STATE MANAGEMENT **/
+    let board = Array(9).fill('');
+    let currentPlayer = 'X';
+    let isGameOver = false;
+    let history = []; 
+    let scores = { X: 0, O: 0, Draws: 0 };
+    let soundEnabled = safeGetItem('ttt_sound') !== 'false';
+    let aiTimeout = null;
 
-const wins = [
-  [0,1,2],[3,4,5],[6,7,8],
-  [0,3,6],[1,4,7],[2,5,8],
-  [0,4,8],[2,4,6]
-];
+    try {
+        const savedScores = safeGetItem('ttt_scores');
+        if (savedScores) scores = JSON.parse(savedScores);
+    } catch(e) {}
 
-function goToMode() {
-  startScreen.classList.add("hidden");
-  modeScreen.classList.remove("hidden");
-}
+    const winConditions = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],
+        [0, 4, 8], [2, 4, 6]
+    ];
 
-function startGame(single) {
-  singlePlayer = single;
-  modeScreen.classList.add("hidden");
-  gameScreen.classList.remove("hidden");
-  init();
-}
+    /** DOM ELEMENTS **/
+    const boardEl = document.getElementById('board');
+    const turnBadge = document.getElementById('turnBadge');
+    const scoreXEl = document.getElementById('scoreX');
+    const scoreOEl = document.getElementById('scoreO');
+    const scoreDrawsEl = document.getElementById('scoreDraws');
+    const labelOEl = document.getElementById('labelO');
+    const gameModeSelect = document.getElementById('gameMode');
+    const difficultySelect = document.getElementById('difficulty');
+    const difficultyWrapper = document.getElementById('difficultyWrapper');
+    const undoBtn = document.getElementById('undoBtn');
+    const gameOverOverlay = document.getElementById('gameOverOverlay');
 
-function init() {
-  board = Array(9).fill("");
-  currentPlayer = "X";
-  gameActive = true;
-  playerCanPlay = true;
-  boardEl.innerHTML = "";
-  board.forEach((_, i) => createCell(i));
-  updateMessage();
-}
+    /** SAFE AUDIO SYSTEM (Lazy Loaded) **/
+    let audioCtx = null;
+    function initAudio() {
+        if (!audioCtx && window.AudioContext || window.webkitAudioContext) {
+            try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } 
+            catch (e) { console.warn("Audio blocked"); }
+        }
+    }
+    
+    // Initialize audio solely on user interaction to pass security
+    document.addEventListener('click', initAudio, { once: true });
+    document.addEventListener('touchstart', initAudio, { once: true });
 
-function createCell(i) {
-  const c = document.createElement("div");
-  c.className = "cell";
-  c.onclick = () => handleMove(i);
-  boardEl.appendChild(c);
-}
+    function playTone(frequency, type, duration) {
+        if (!soundEnabled || !audioCtx) return;
+        try {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
+        } catch(e) {} // Fail silently if audio is unsupported
+    }
 
-function handleMove(i) {
-  if (!gameActive || !playerCanPlay || board[i]) return;
+    const sound = {
+        click: () => playTone(500, 'sine', 0.1),
+        win: () => {
+            playTone(400, 'triangle', 0.1);
+            setTimeout(() => playTone(600, 'triangle', 0.15), 100);
+            setTimeout(() => playTone(800, 'triangle', 0.2), 250);
+        },
+        draw: () => {
+            playTone(300, 'square', 0.2);
+            setTimeout(() => playTone(250, 'square', 0.3), 200);
+        }
+    };
 
-  place(i, currentPlayer);
-  if (checkEnd()) return;
+    /** INITIALIZATION **/
+    function init() {
+        createBoard();
+        updateScoreBoard();
+        setupEventListeners();
+        updateUIState();
+        applyTheme();
+    }
 
-  currentPlayer = currentPlayer === "X" ? "O" : "X";
-  updateMessage();
+    function createBoard() {
+        boardEl.innerHTML = '';
+        board.forEach((cell, index) => {
+            const cellEl = document.createElement('div');
+            cellEl.classList.add('cell');
+            cellEl.addEventListener('click', () => handleCellClick(index));
+            
+            const content = document.createElement('span');
+            content.classList.add('cell-content');
+            cellEl.appendChild(content);
+            boardEl.appendChild(cellEl);
+        });
+    }
 
-  if (singlePlayer && currentPlayer === "O") {
-    playerCanPlay = false;
-    setTimeout(() => {
-      aiMove();
-      playerCanPlay = true;
-    }, 400);
-  }
-}
+    /** GAME LOGIC **/
+    function handleCellClick(index) {
+        if (isGameOver || board[index] !== '') return;
+        if (gameModeSelect.value === 'pve' && currentPlayer === 'O') return;
 
-function aiMove() {
-  const empty = board.map((v,i)=>v?null:i).filter(v=>v!==null);
-  const move = empty[Math.floor(Math.random()*empty.length)];
-  place(move, "O");
-  if (checkEnd()) return;
-  currentPlayer = "X";
-  updateMessage();
-}
+        makeMove(index, currentPlayer);
+        
+        if (!isGameOver && gameModeSelect.value === 'pve') {
+            aiTimeout = setTimeout(makeAIMove, 400);
+        }
+    }
 
-function place(i, p) {
-  board[i] = p;
-  boardEl.children[i].textContent = p;
-}
+    function makeMove(index, player) {
+        history.push([...board]); 
+        board[index] = player;
+        sound.click();
+        
+        renderBoard();
+        checkGameState();
+        
+        if (!isGameOver) {
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            updateTurnIndicator();
+        }
+        undoBtn.disabled = history.length === 0;
+    }
 
-function checkEnd() {
-  if (wins.some(w => w.every(i => board[i] === currentPlayer))) {
-    messageEl.textContent = `🎉 ${currentPlayer} wins`;
-    gameActive = false;
-    return true;
-  }
-  if (board.every(v => v)) {
-    messageEl.textContent = "Draw";
-    gameActive = false;
-    return true;
-  }
-  return false;
-}
+    function renderBoard() {
+        const cells = document.querySelectorAll('.cell');
+        board.forEach((val, i) => {
+            const cell = cells[i];
+            const content = cell.querySelector('.cell-content');
+            
+            if (val !== '' && !cell.classList.contains('occupied')) {
+                cell.classList.add('occupied');
+                cell.dataset.value = val;
+                content.innerText = val;
+            } else if (val === '') {
+                cell.classList.remove('occupied', 'win');
+                cell.removeAttribute('data-value');
+                content.innerText = '';
+            }
+        });
+    }
 
-function updateMessage() {
-  messageEl.textContent = `Player ${currentPlayer}'s turn`;
-}
+    function checkGameState() {
+        let roundWon = false;
+        let winningCells = [];
 
-function resetGame() {
-  init();
-}
+        for (let i = 0; i < winConditions.length; i++) {
+            const [a, b, c] = winConditions[i];
+            if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+                roundWon = true;
+                winningCells = [a, b, c];
+                break;
+            }
+        }
+
+        if (roundWon) return handleWin(currentPlayer, winningCells);
+        if (!board.includes('')) handleDraw();
+    }
+
+    function handleWin(winner, cells) {
+        isGameOver = true;
+        sound.win();
+        
+        const domCells = document.querySelectorAll('.cell');
+        cells.forEach(idx => domCells[idx].classList.add('win'));
+        
+        scores[winner]++;
+        safeSetItem('ttt_scores', JSON.stringify(scores));
+        updateScoreBoard();
+
+        setTimeout(() => {
+            document.getElementById('gameOverTitle').innerText = 'Winner!';
+            document.getElementById('gameOverMsg').innerText = winner === 'X' ? 'Player X wins!' : (gameModeSelect.value === 'pve' ? 'AI wins!' : 'Player O wins!');
+            gameOverOverlay.classList.add('active');
+        }, 800);
+    }
+
+    function handleDraw() {
+        isGameOver = true;
+        sound.draw();
+        scores.Draws++;
+        safeSetItem('ttt_scores', JSON.stringify(scores));
+        updateScoreBoard();
+
+        setTimeout(() => {
+            document.getElementById('gameOverTitle').innerText = 'Draw!';
+            document.getElementById('gameOverMsg').innerText = 'It\'s a tie. No one wins.';
+            gameOverOverlay.classList.add('active');
+        }, 500);
+    }
+
+    function updateTurnIndicator() {
+        turnBadge.innerText = currentPlayer;
+        turnBadge.style.backgroundColor = currentPlayer === 'X' ? 'var(--md-sys-color-primary-container)' : 'var(--md-sys-color-tertiary-container)';
+        turnBadge.style.color = currentPlayer === 'X' ? 'var(--md-sys-color-on-primary-container)' : 'var(--md-sys-color-on-tertiary-container)';
+    }
+
+    function resetGame() {
+        clearTimeout(aiTimeout);
+        board = Array(9).fill('');
+        currentPlayer = 'X';
+        isGameOver = false;
+        history = [];
+        undoBtn.disabled = true;
+        renderBoard();
+        document.querySelectorAll('.cell').forEach(c => c.classList.remove('win'));
+        updateTurnIndicator();
+        gameOverOverlay.classList.remove('active');
+    }
+
+    function undoMove() {
+        if (history.length === 0 || isGameOver) return;
+        clearTimeout(aiTimeout); 
+        
+        if (gameModeSelect.value === 'pve' && history.length >= 2 && currentPlayer === 'X') {
+            history.pop(); 
+            board = history.pop(); 
+        } else {
+            board = history.pop();
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        }
+        
+        renderBoard();
+        updateTurnIndicator();
+        undoBtn.disabled = history.length === 0;
+    }
+
+    /** AI LOGIC **/
+    function makeAIMove() {
+        if (isGameOver) return;
+        const diff = difficultySelect.value;
+        let move = -1;
+
+        if (diff === 'easy') {
+            move = getRandomMove(board);
+        } else if (diff === 'medium') {
+            move = Math.random() < 0.5 ? getBestMove(board) : getRandomMove(board);
+        } else {
+            move = getBestMove(board);
+        }
+
+        if (move !== -1) makeMove(move, 'O');
+    }
+
+    function getRandomMove(b) {
+        const avail = b.map((v, i) => v === '' ? i : null).filter(v => v !== null);
+        return avail.length ? avail[Math.floor(Math.random() * avail.length)] : -1;
+    }
+
+    function getBestMove(b) {
+        let bestScore = -Infinity;
+        let move = -1;
+        for (let i = 0; i < 9; i++) {
+            if (b[i] === '') {
+                b[i] = 'O';
+                let score = minimax(b, 0, false);
+                b[i] = '';
+                if (score > bestScore) { bestScore = score; move = i; }
+            }
+        }
+        return move;
+    }
+
+    function minimax(b, depth, isMax) {
+        let res = checkWinnerForMinimax(b);
+        if (res === 'O') return 10 - depth;
+        if (res === 'X') return depth - 10;
+        if (!b.includes('')) return 0;
+
+        let bestScore = isMax ? -Infinity : Infinity;
+        for (let i = 0; i < 9; i++) {
+            if (b[i] === '') {
+                b[i] = isMax ? 'O' : 'X';
+                let score = minimax(b, depth + 1, !isMax);
+                b[i] = '';
+                bestScore = isMax ? Math.max(score, bestScore) : Math.min(score, bestScore);
+            }
+        }
+        return bestScore;
+    }
+
+    function checkWinnerForMinimax(b) {
+        for (let i = 0; i < winConditions.length; i++) {
+            const [x, y, z] = winConditions[i];
+            if (b[x] && b[x] === b[y] && b[x] === b[z]) return b[x];
+        }
+        return null;
+    }
+
+    /** UI SETTINGS **/
+    function updateScoreBoard() {
+        scoreXEl.innerText = scores.X;
+        scoreOEl.innerText = scores.O;
+        scoreDrawsEl.innerText = scores.Draws;
+    }
+
+    function updateUIState() {
+        const isPvE = gameModeSelect.value === 'pve';
+        difficultyWrapper.style.display = isPvE ? 'block' : 'none';
+        labelOEl.innerText = isPvE ? 'AI (O)' : 'Player O';
+        resetGame();
+    }
+
+    function applyTheme() {
+        const isDark = document.getElementById('themeToggle').checked;
+        document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        safeSetItem('ttt_theme', isDark ? 'dark' : 'light');
+    }
+
+    function setupEventListeners() {
+        document.getElementById('restartBtn').addEventListener('click', resetGame);
+        undoBtn.addEventListener('click', undoMove);
+        gameModeSelect.addEventListener('change', updateUIState);
+        difficultySelect.addEventListener('change', resetGame);
+        document.getElementById('playAgainBtn').addEventListener('click', resetGame);
+        
+        const overlay = document.getElementById('settingsOverlay');
+        document.getElementById('settingsBtn').addEventListener('click', () => overlay.classList.add('active'));
+        document.getElementById('closeSettingsBtn').addEventListener('click', () => overlay.classList.remove('active'));
+        
+        document.getElementById('resetScoresBtn').addEventListener('click', () => {
+            scores = { X: 0, O: 0, Draws: 0 };
+            safeSetItem('ttt_scores', JSON.stringify(scores));
+            updateScoreBoard();
+        });
+        
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.checked = safeGetItem('ttt_theme') === 'dark';
+        themeToggle.addEventListener('change', applyTheme);
+        
+        const sToggle = document.getElementById('soundToggle');
+        sToggle.checked = soundEnabled;
+        sToggle.addEventListener('change', (e) => {
+            soundEnabled = e.target.checked;
+            safeSetItem('ttt_sound', soundEnabled);
+        });
+    }
+
+    init();
 </script>
-
 </body>
 </html>
